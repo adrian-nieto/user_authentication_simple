@@ -1,18 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Logged In</title>
+</head>
+<body>
+
 <?php
-    //start a session
-    //connect to our mysql database
-    //get username and password values from our login form, and put them in easier-to-use variables
-    //$username = ?
-    //$password = ?
+    session_start();
+    $con = mysqli_connect("localhost" ,"root", "", "lf_db");
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $password = sha1($password);
+    $output = [];
 
-    //convert our password into a hashed password, using the function "sha1": $password
-
-    //construct an SQL statement, $query, that selects the record with both our username and hashed password, $username and $password. The table is "users" 
-    //execute $query, and receive the results in $results
-    //if a row was returned, the user is validated.  
-    //if the user was validated, fetch the user's data into $user_info variable
-    //put the user's data into a key/value pair in the session superglobal.  Use key 'userinfo' in the session superglobal
-    //else the user wasn't validated
-    //inform the user that their username/password was incorrect
-    //end of file.  output any results here.
+    $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $result = mysqli_query($con, $query);
+    if(mysqli_num_rows($result) > 0){
+        $user_info = mysqli_fetch_assoc($result);
+        $_SESSION['userinfo'] = $user_info;
+        $output['message'] = "User validated and session started";
+    }
+    else{
+        echo "Username/password was incorrect!";   
+        $output['message'] = "Could not find username/password match in db";
+    }
+    echo json_encode($output);
+    
 ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <a href="logout.php">Logout</a>
+
+</body>
+</html>

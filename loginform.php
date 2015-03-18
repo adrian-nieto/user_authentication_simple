@@ -24,12 +24,11 @@ body{
 <body>
     
 <div class="login_form">
-    <form action="" method="">
-        
+    <form action="login.php" method="POST">
+        <input type="text" name="username" placeholder="Input Username">
+        <input type="text" name="password" placeholder="Input Password">
+        <button type="submit" name="submitButton" value="submit">Submit</button>
     </form>
 </div>
-
-
-
 </body>
 </html>

@@ -1,5 +1,7 @@
 <?php
-    //start a session
-    //destroy the session with session_destroy
-    //done!
+    session_start();
+    //logout user
+    session_destroy();
+
+    echo "Logged out successfully";
 ?>
